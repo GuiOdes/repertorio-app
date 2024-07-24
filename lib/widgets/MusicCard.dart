@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:repertorio/models/MusicModel.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class MusicCard extends StatefulWidget {
+  final String id;
   final String title;
   final String tonality;
   final String? letterLink;
@@ -11,6 +12,7 @@ class MusicCard extends StatefulWidget {
 
   const MusicCard({
     super.key,
+    required this.id,
     required this.title,
     required this.tonality,
     this.letterLink,
@@ -18,13 +20,25 @@ class MusicCard extends StatefulWidget {
     this.videoLink
   });
 
+  static ofMusic(Music music) {
+    return MusicCard(
+      id: music.id.toString(),
+      title: music.name,
+      tonality: music.key,
+      letterLink: music.lyricsLink,
+      sheetMusicLink: music.chordLink,
+      videoLink: music.videoLink,
+    );
+  }
+
   @override
   State<StatefulWidget> createState() {
-    return _DropdownState(title, tonality, letterLink, sheetMusicLink, videoLink);
+    return _DropdownState(id, title, tonality, letterLink, sheetMusicLink, videoLink);
   }
 }
 
 class _DropdownState extends State<MusicCard> {
+  final String id;
   final String title;
   final String tonality;
   final String? letterLink;
@@ -33,7 +47,7 @@ class _DropdownState extends State<MusicCard> {
 
   bool _isDropdownOpen = false;
 
-  _DropdownState(this.title, this.tonality, this.letterLink,
+  _DropdownState(this.id, this.title, this.tonality, this.letterLink,
       this.sheetMusicLink, this.videoLink);
 
   @override
@@ -55,7 +69,7 @@ class _DropdownState extends State<MusicCard> {
             },
           ),
           if (_isDropdownOpen)
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Padding(
                 padding: const EdgeInsets.only(left: 16),
