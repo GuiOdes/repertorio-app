@@ -1,0 +1,5 @@
+package com.guiodes.repertorio
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity()
