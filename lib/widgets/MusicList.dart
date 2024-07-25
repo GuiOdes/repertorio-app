@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:repertorio/commons/Constants.dart';
 
-import '../commons/Builders.dart';
 import '../models/MusicModel.dart';
 import '../services/MusicService.dart';
 import 'MusicCard.dart';
@@ -14,8 +12,12 @@ class MusicList extends StatefulWidget {
 }
 
 class MusicListState extends State<MusicList> {
-  late List<Music> _musicList;
+  List<Music> _musicList = [];
   List<Music> _filteredMusicList = [];
+  bool _isLoading = true;
+  final MusicService _musicService = MusicService();
+  TextEditingController editingController = TextEditingController();
+
 
   @override
   void initState() {
@@ -25,15 +27,20 @@ class MusicListState extends State<MusicList> {
 
   Future<void> _fetchMusicList() async {
     try {
-      final MusicService musicService = MusicService();
-      final musicList = await musicService.findAllMusics();
+      final result = await _musicService.findAllMusics();
+
       setState(() {
-        _musicList = musicList;
-        _filteredMusicList = musicList;
+        _musicList = result;
+        _filteredMusicList = result;
       });
     } catch (e) {
       print('Erro ao obter a lista de músicas: $e');
     }
+
+    setState(() {
+      _isLoading = false;
+      editingController.text = '';
+    });
   }
 
   void _runFilter(String enteredKeyword) {
@@ -53,6 +60,24 @@ class MusicListState extends State<MusicList> {
     });
   }
 
+  TextField _searchField() {
+    return TextField(
+      onChanged: (key) => _runFilter(key),
+      controller: editingController,
+      decoration: const InputDecoration(
+        labelText: 'Filtrar músicas',
+        suffixIcon: Icon(Icons.search),
+      ),
+    );
+  }
+
+  ListView _buildMusicList() {
+    return ListView.builder(
+        itemCount: _filteredMusicList.length,
+        itemBuilder: (context, index) =>
+            MusicCard.ofMusic(_filteredMusicList[index]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,21 +85,13 @@ class MusicListState extends State<MusicList> {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          TextField(
-            onChanged: (key) => _runFilter(key),
-            decoration: const InputDecoration(
-              labelText: 'Filtrar músicas',
-              suffixIcon: Icon(Icons.search),
-            ),
-          ),
+          _searchField(),
           const SizedBox(height: 20),
-          Expanded(
-            child: _filteredMusicList.isNotEmpty ?
-            ListView.builder(
-                itemCount: _filteredMusicList.length,
-                itemBuilder: (context, index) => MusicCard.ofMusic(_filteredMusicList[index])
-            ) : Center(child: buildInfoLink('Nenhuma música encontrada.', '$apiUrl/file')),
-          ),
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Expanded(
+                  child: RefreshIndicator(
+                      onRefresh: _fetchMusicList, child: _buildMusicList()))
         ],
       ),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:repertorio/models/MusicModel.dart';
 import 'package:repertorio/services/MusicService.dart';
 import 'package:repertorio/widgets/CustomAppBar.dart';
-import 'package:repertorio/widgets/MusicCard.dart';
 import 'package:repertorio/widgets/MusicList.dart';
 
 void main() {
