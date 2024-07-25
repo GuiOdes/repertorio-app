@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:repertorio/models/MusicModel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../commons/Builders.dart';
+
 class MusicCard extends StatefulWidget {
+  @override
+  final ValueKey key;
   final String id;
   final String title;
   final String tonality;
@@ -11,7 +15,7 @@ class MusicCard extends StatefulWidget {
   final String? videoLink;
 
   const MusicCard({
-    super.key,
+    required this.key,
     required this.id,
     required this.title,
     required this.tonality,
@@ -22,6 +26,7 @@ class MusicCard extends StatefulWidget {
 
   static ofMusic(Music music) {
     return MusicCard(
+      key: ValueKey(music.id),
       id: music.id.toString(),
       title: music.name,
       tonality: music.key,
@@ -33,22 +38,12 @@ class MusicCard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _DropdownState(id, title, tonality, letterLink, sheetMusicLink, videoLink);
+    return _DropdownState();
   }
 }
 
 class _DropdownState extends State<MusicCard> {
-  final String id;
-  final String title;
-  final String tonality;
-  final String? letterLink;
-  final String? sheetMusicLink;
-  final String? videoLink;
-
   bool _isDropdownOpen = false;
-
-  _DropdownState(this.id, this.title, this.tonality, this.letterLink,
-      this.sheetMusicLink, this.videoLink);
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +52,13 @@ class _DropdownState extends State<MusicCard> {
         children: [
           ListTile(
             leading: const Icon(Icons.music_note),
-            title: Text(title),
-            subtitle: Text('Tom: $tonality'),
+            title: Text(widget.title),
+            subtitle: Text('Tom: ${widget.tonality}'),
             tileColor: Colors.black12,
             trailing: const Icon(Icons.arrow_drop_down_circle_outlined),
             onTap: () {
               setState(() {
                 _isDropdownOpen = !_isDropdownOpen;
-                print("$title $_isDropdownOpen");
               });
             },
           ),
@@ -76,9 +70,12 @@ class _DropdownState extends State<MusicCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildInfoLink('Letra', letterLink) ?? const Text("Letra indisponível"),
-                    _buildInfoLink('Cifra', sheetMusicLink) ?? const Text("Cifra indisponível"),
-                    _buildInfoLink('Vídeo', videoLink) ?? const Text("Vídeo indisponível"),
+                    buildInfoLink('Letra', widget.letterLink) ??
+                        const Text("Letra indisponível"),
+                    buildInfoLink('Cifra', widget.sheetMusicLink) ??
+                        const Text("Cifra indisponível"),
+                    buildInfoLink('Vídeo', widget.videoLink) ??
+                        const Text("Vídeo indisponível"),
                   ],
                 ),
               ),
@@ -87,25 +84,4 @@ class _DropdownState extends State<MusicCard> {
       ),
     );
   }
-}
-
-Widget? _buildInfoLink(String infoName, String? link) {
-  if (link == null) {
-    return null;
-  }
-
-  return InkWell(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue),
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(infoName),
-    ),
-    onTap: () {
-      launchUrl(Uri.parse(link));
-    },
-  );
 }

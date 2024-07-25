@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       return await musicService.findAllMusics();
     } catch (e) {
       print('Erro ao obter a lista de músicas: $e');
-      return []; // Retorne uma lista vazia ou trate o erro de forma adequada.
+      return [];
     }
   }
 

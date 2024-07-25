@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:repertorio/commons/Constants.dart';
 
+import '../commons/Builders.dart';
 import '../models/MusicModel.dart';
 import '../services/MusicService.dart';
 import 'MusicCard.dart';
@@ -13,7 +15,7 @@ class MusicList extends StatefulWidget {
 
 class MusicListState extends State<MusicList> {
   late List<Music> _musicList;
-  late List<Music> _filteredMusicList;
+  List<Music> _filteredMusicList = [];
 
   @override
   void initState() {
@@ -46,9 +48,6 @@ class MusicListState extends State<MusicList> {
           .toList();
     }
 
-    print(enteredKeyword);
-    print(results.map((e) => e.name).toList());
-
     setState(() {
       _filteredMusicList = results;
     });
@@ -70,16 +69,11 @@ class MusicListState extends State<MusicList> {
           ),
           const SizedBox(height: 20),
           Expanded(
-            child: ListView.builder(
-              key: ValueKey(_filteredMusicList[0].id),
-              itemCount: _filteredMusicList.length,
-              itemBuilder: (context, index) {
-                print(_filteredMusicList[index].name);
-                print(_filteredMusicList[index].id);
-                print(index);
-                return MusicCard.ofMusic(_filteredMusicList[index]);
-              }
-            ),
+            child: _filteredMusicList.isNotEmpty ?
+            ListView.builder(
+                itemCount: _filteredMusicList.length,
+                itemBuilder: (context, index) => MusicCard.ofMusic(_filteredMusicList[index])
+            ) : Center(child: buildInfoLink('Nenhuma música encontrada.', '$apiUrl/file')),
           ),
         ],
       ),

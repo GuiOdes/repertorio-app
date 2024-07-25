@@ -1,1 +1,1 @@
-const String apiUrl = 'http://192.168.1.25:8080';
+const String apiUrl = 'http://172.24.85.109:8080';
