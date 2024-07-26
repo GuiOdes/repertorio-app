@@ -6,9 +6,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text("Repertório"),
-      backgroundColor: Colors.blueAccent
-    );
+        centerTitle: true,
+        title: const Text(
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
+                shadows: [
+                  Shadow(
+                    color: Colors.black,
+                    blurRadius: 2,
+                    offset: Offset(1, 1),
+                  )
+                ]),
+            "Ministério de Louvor - ICPV"),
+        backgroundColor: Colors.deepOrange);
   }
 
   @override

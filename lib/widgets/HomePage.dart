@@ -7,8 +7,7 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() =>
-      _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -27,31 +26,40 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: const CustomAppBar(),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.music_note), label: 'Músicas'
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt), label: 'Repertório'),
-        ],
-        onTap: _onItemTapped,
-        selectedItemColor: Color(Colors.deepOrange.value),
-        currentIndex: _selectedIndex,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+    return Scaffold(
+        appBar: const CustomAppBar(),
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.music_note), label: 'Músicas'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.list_alt), label: 'Repertórios'),
+          ],
+          onTap: _onItemTapped,
+          selectedItemColor: Color(Colors.deepOrange.value),
+          currentIndex: _selectedIndex,
         ),
-        onPressed: () {
-          print("denis");
-        },
-        backgroundColor: Color(Colors.deepOrange.value),
-        child: const Icon(Icons.add),
-      )
-    );
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+          onPressed: () {
+            print("denis");
+          },
+          backgroundColor: Color(Colors.deepOrange.value),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                blurRadius: 3,
+                offset: Offset(1, 1),
+              )
+            ],
+          ),
+        ));
   }
 }

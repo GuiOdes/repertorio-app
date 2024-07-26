@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:repertorio/models/MusicModel.dart';
 import 'package:repertorio/services/MusicService.dart';
 import 'package:repertorio/widgets/HomePage.dart';
-import 'package:repertorio/widgets/CustomAppBar.dart';
-import 'package:repertorio/widgets/MusicList.dart';
 
 void main() {
   runApp(const MyApp());
