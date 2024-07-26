@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:repertorio/models/MusicModel.dart';
 import 'package:repertorio/services/MusicService.dart';
+import 'package:repertorio/widgets/HomePage.dart';
 import 'package:repertorio/widgets/CustomAppBar.dart';
 import 'package:repertorio/widgets/MusicList.dart';
 
@@ -31,10 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Scaffold(
-        appBar: CustomAppBar(),
-        body: MusicList()
-      ),
+      home: const HomePage(),
     );
   }
 }

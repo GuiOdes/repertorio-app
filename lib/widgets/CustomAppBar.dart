@@ -7,15 +7,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text("Repertório"),
-      backgroundColor: Colors.blueAccent,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            print("Nova música");
-          },
-        )
-      ],
+      backgroundColor: Colors.blueAccent
     );
   }
 

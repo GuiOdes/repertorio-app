@@ -18,7 +18,6 @@ class MusicListState extends State<MusicList> {
   final MusicService _musicService = MusicService();
   TextEditingController editingController = TextEditingController();
 
-
   @override
   void initState() {
     _fetchMusicList();
