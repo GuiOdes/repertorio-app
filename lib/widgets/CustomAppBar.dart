@@ -20,7 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     offset: Offset(1, 1),
                   )
                 ]),
-            "Ministério de Louvor - ICPV"),
+            "Ministério de Louvor"),
         backgroundColor: Colors.deepOrange);
   }
 
