@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:repertorio/widgets/CustomAppBar.dart';
 
-import 'MusicList.dart';
+import '../widgets/MusicList.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

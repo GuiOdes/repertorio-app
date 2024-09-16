@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:repertorio/models/MusicModel.dart';
+import 'package:repertorio/pages/LoginPage.dart';
 import 'package:repertorio/services/MusicService.dart';
-import 'package:repertorio/widgets/HomePage.dart';
+import 'package:repertorio/pages/HomePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,14 +24,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Repertório',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            textStyle: const TextStyle(fontSize: 21),
+            backgroundColor: Colors.deepOrange,
+        )),
       ),
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
